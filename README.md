@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/bd1c098e-a10c-44fe-8b76-a643ac587ca5)# 📝 Notepad - React ile Kişisel Not Uygulaması
+# 📝 Notepad - React ile Kişisel Not Uygulaması
 
 Bu proje, kullanıcıların kişisel notlarını oluşturup düzenleyebileceği basit ve modern bir **Not Uygulaması**dır. React, Redux ve TailwindCSS kullanılarak geliştirilmiştir.
 
