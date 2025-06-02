@@ -2,17 +2,20 @@ import { useEffect } from "react";
 
 const useOutsideClick = (ref, callback, enabled = true) => {
     useEffect(() => {
-        if (!enabled) return;
+        if (!enabled || !ref?.current) return;
 
         const handleClickOutside = (event) => {
             if (ref.current && !ref.current.contains(event.target)) {
-                callback(); //dışarı tıkladığımızda istenilen işlem callback ile çağırılıyor
+                callback();
             }
         };
 
-        document.addEventListener("mousedown", handleClickOutside); //click dinlemeye yarar
+        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("touchstart", handleClickOutside);
+
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("touchstart", handleClickOutside);
         };
     }, [ref, callback, enabled]);
 };

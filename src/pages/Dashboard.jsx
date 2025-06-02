@@ -19,7 +19,6 @@ const Dashboard = () => {
     const filteredNotes = notes.filter((note) => //search rowdan gelen gharfe göre arama yapma filtreleme işlemi
         note.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    console.log("sorttt:", filteredNotes)
     //pagination
     const [currentPage, setCurrentPage] = useState(1);
     const notesPerPage = 3;
@@ -35,7 +34,8 @@ const Dashboard = () => {
                 setSelectedNote(updated);
             }
         }
-    }, [notes]); // notes güncellenince tetiklenir ve orta panelde güncellenmiş not güncellenir.
+    }, [filteredNotes, selectedNote]);
+    // notes güncellenince tetiklenir ve orta panelde güncellenmiş not güncellenir.
 
     //pagination işlemleri
 
@@ -69,9 +69,10 @@ const Dashboard = () => {
                         />
                     ))
                 ) : (
-                    <p className='text-notWhite text-sm'>Hiç not yok.</p>
+                    <p className='text-notWhite text-sm'>
+                        {notes.length === 0 ? "Hiç not yok." : "Arama sonucuna uygun not bulunamadı."}
+                    </p>
                 )}
-
                 {/* Pagination Butonları */}
                 <div className="flex  justify-center gap-5 mt-4 px-2">
                     <button

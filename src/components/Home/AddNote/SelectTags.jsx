@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AllTags } from '../../../redux/tagsReducer';
 import AddTags from './AddTags';
@@ -9,6 +9,7 @@ const SelectTags = ({ setSelectedTags }) => {
     const dispatch = useDispatch();
     const [addTags, setAddTags] = useState(false);
     const [localSelectedTags, setLocalSelectedTags] = useState(['']); // FARKLI İSİM
+console.log("selecttags render edilid")
 
     useEffect(() => {
         dispatch(AllTags())
@@ -20,21 +21,29 @@ const SelectTags = ({ setSelectedTags }) => {
         }
     }, [localSelectedTags, setSelectedTags]);
 
-    const handleAddTags = (e) => {
+    const handleAddTags = useCallback((e) => {
         e.preventDefault();
-        setLocalSelectedTags([...localSelectedTags, '']);
-    };
+        setLocalSelectedTags((prev) => [...prev, '']);
+    }, []);
 
-    const handleRemoveTags = (indexToRemove) => {
-        setLocalSelectedTags(localSelectedTags.filter((_, index) => index !== indexToRemove));
-    };
+    const handleRemoveTags = useCallback + ((indexToRemove) => {
+        setLocalSelectedTags((prev) => prev.filter((_, index) => index !== indexToRemove));
+    }, []);
 
-    const handleSelectTags = (value, index) => {
-        const updated = [...localSelectedTags];
-        updated[index] = value;
-        setLocalSelectedTags(updated);
-    };
-
+    const handleSelectTags = useCallback((value, index) => {
+        setLocalSelectedTags((prev) => {
+            const updated = [...prev];
+            updated[index] = value;
+            return updated;
+        });
+    }, []);
+    const tagOptions = useMemo(() => {
+        return tags.map((tag) => (
+            <option key={tag.id} value={tag.id}>
+                {tag.tagsName}
+            </option>
+        ));
+    }, [tags]);
     return (
         <div className='flex flex-col space-y-2'>
             <label className='mb-1 text-notWhite'>Tags</label>
@@ -46,11 +55,7 @@ const SelectTags = ({ setSelectedTags }) => {
                         onChange={(e) => handleSelectTags(e.target.value, index)}
                     >
                         <option value="">Seçiniz</option>
-                        {tags.map((tag) => (
-                            <option key={tag.id} value={tag.id}>
-                                {tag.tagsName}
-                            </option>
-                        ))}
+                        {tagOptions}
                     </select>
                     <button
                         type="button"
@@ -67,4 +72,4 @@ const SelectTags = ({ setSelectedTags }) => {
     );
 }
 
-export default SelectTags
+export default React.memo(SelectTags);

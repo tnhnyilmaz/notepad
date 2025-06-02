@@ -1,15 +1,16 @@
 import { getAuth } from 'firebase/auth';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdOutlineNoteAlt } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 import AddNote from '../components/Home/AddNote';
 import AddNoteBtn from '../components/utils/AddNoteBtn';
-import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const auth = getAuth();
     const user = auth.currentUser;
     const [addNote, setAddNote] = useState(false);
     const navigate = useNavigate();
+    console.log("home sayfası render edildi")
 
 
     return (
@@ -19,7 +20,7 @@ const Home = () => {
                     Welcome to <span className='font-semibold'>NotPad Web</span>
                 </div>
                 <AddNoteBtn addNote={addNote} setAddNote={setAddNote} />
-                <button onClick={()=> navigate("/notes")} className='flex justify-center items-center gap-4 px-14 py-2 bg-notRed rounded-lg text-notWhite'>
+                <button onClick={() => navigate("/notes")} className='flex justify-center items-center gap-4 px-14 py-2 bg-notRed rounded-lg text-notWhite'>
                     <MdOutlineNoteAlt size={20} />
                     Notes
                 </button>
@@ -30,4 +31,5 @@ const Home = () => {
         </div>
     );
 };
+
 export default Home

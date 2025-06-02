@@ -4,6 +4,7 @@ import LoginForm from '../components/LoginRegister/LoginForm';
 import RegisterForm from '../components/LoginRegister/RegisterForm';
 
 const LoginRegister = () => {
+    console.log("render login")
     const [keyword, setKeyword] = useState(false);
     return (
         <div className='w-full h-screen bg-notGrey5 flex items-center justify-center'>

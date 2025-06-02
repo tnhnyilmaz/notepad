@@ -1,14 +1,15 @@
 import {
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    updateProfile
+    signInWithEmailAndPassword
 } from 'firebase/auth';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { auth } from '../../redux/firebaseConfig';
 import FormInput from './FormInput';
-import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
+        console.log("login render")
+
     const [isRegister, setIsRegister] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

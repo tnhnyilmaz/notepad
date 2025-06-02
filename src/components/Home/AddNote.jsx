@@ -1,15 +1,22 @@
 import { getAuth } from 'firebase/auth/web-extension';
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import SelectCategory from './AddNote/SelectCategory';
 import SelectTags from './AddNote/SelectTags';
 
 const AddNote = ({ setAddNote }) => {
+    console.log("addnote render edilid.")
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
 
+    const handleSetCategories = useCallback((newCategories) => {
+        setSelectedCategories(newCategories);
+    }, []);
+    const handleSetTags = useCallback((newTags) => {
+        setSelectedTags(newTags);
+    }, []);
     const handleSave = async () => {
         const auth = getAuth();
         const db = getFirestore();
@@ -67,10 +74,12 @@ const AddNote = ({ setAddNote }) => {
                     </div>
                     <SelectCategory
                         selectedCategories={selectedCategories}
-                        setSelectedCategories={setSelectedCategories}
+                        setSelectedCategories={handleSetCategories}
                     />
-                    <SelectTags selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
-
+                    <SelectTags
+                        selectedTags={selectedTags}
+                        setSelectedTags={handleSetTags}
+                    />
                     <button type="button" onClick={handleSave} className='p-1 px-4 bg-notBlue rounded-md flex justify-end items-end'>Save</button>
                 </form>
             </div >
@@ -78,4 +87,4 @@ const AddNote = ({ setAddNote }) => {
     )
 }
 
-export default AddNote
+export default React.memo(AddNote);

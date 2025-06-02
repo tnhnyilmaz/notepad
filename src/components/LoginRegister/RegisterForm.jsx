@@ -5,6 +5,7 @@ import FormInput from './FormInput';
 
 
 const RegisterForm = () => {
+    console.log("register render")
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
